@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Film, Camera, Compass, Clapperboard, Video } from "lucide-react"
+import { motion } from "framer-motion";
+import { Film, Camera, Compass, Clapperboard, Video } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const floatingIcons = [
   { Icon: Film, delay: 0, duration: 20, x: "10%", y: "20%" },
@@ -10,9 +11,23 @@ const floatingIcons = [
   { Icon: Clapperboard, delay: 1, duration: 24, x: "85%", y: "75%" },
   { Icon: Video, delay: 3, duration: 23, x: "50%", y: "10%" },
   { Icon: Film, delay: 5, duration: 21, x: "70%", y: "50%" },
-]
+];
 
 export function AnimatedBackground() {
+  const [width, setWidth] = useState<number | null>(null);
+  const [height, setHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+
+    handleResize(); // establecer ancho inicial
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Gradient orbs */}
@@ -90,8 +105,8 @@ export function AnimatedBackground() {
           key={`particle-${i}`}
           initial={{
             opacity: 0,
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * width!,
+            y: Math.random() * height!,
           }}
           animate={{
             opacity: [0, 0.5, 0],
@@ -106,5 +121,5 @@ export function AnimatedBackground() {
         />
       ))}
     </div>
-  )
+  );
 }
