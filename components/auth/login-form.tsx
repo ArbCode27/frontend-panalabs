@@ -1,27 +1,28 @@
-"use client"
+"use client";
+import type React from "react";
 
-import type React from "react"
-
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Compass, UserPlus, Mail, Lock } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Compass, UserPlus, Mail, Lock } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
-  onLogin: (email: string, password: string) => void
-  hasError: boolean
+  onLogin: (email: string, password: string) => void;
+  hasError: boolean;
 }
 
 export function LoginForm({ onLogin, hasError }: LoginFormProps) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const route = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onLogin(email, password)
-  }
+    e.preventDefault();
+    onLogin(email, password);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -31,15 +32,20 @@ export function LoginForm({ onLogin, hasError }: LoginFormProps) {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="relative"
+    >
       <motion.div
         animate={hasError ? { x: [-10, 10, -10, 10, 0] } : {}}
         transition={{ duration: 0.4 }}
@@ -61,7 +67,10 @@ export function LoginForm({ onLogin, hasError }: LoginFormProps) {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <motion.div variants={itemVariants} className="space-y-2">
-            <Label htmlFor="email" className="text-foreground flex items-center gap-2">
+            <Label
+              htmlFor="email"
+              className="text-foreground flex items-center gap-2"
+            >
               <Mail className="w-4 h-4 text-primary" />
               Correo electrónico
             </Label>
@@ -77,7 +86,10 @@ export function LoginForm({ onLogin, hasError }: LoginFormProps) {
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-2">
-            <Label htmlFor="password" className="text-foreground flex items-center gap-2">
+            <Label
+              htmlFor="password"
+              className="text-foreground flex items-center gap-2"
+            >
               <Lock className="w-4 h-4 text-primary" />
               Contraseña
             </Label>
@@ -105,6 +117,7 @@ export function LoginForm({ onLogin, hasError }: LoginFormProps) {
             <Button
               type="button"
               variant="outline"
+              onClick={() => route.push("/register")}
               className="w-full border-2 border-primary/30 hover:border-primary hover:bg-primary/5 text-foreground font-semibold transition-all duration-300 group relative overflow-hidden bg-transparent"
               size="lg"
             >
@@ -121,11 +134,14 @@ export function LoginForm({ onLogin, hasError }: LoginFormProps) {
         </form>
 
         <motion.div variants={itemVariants} className="mt-6 text-center">
-          <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+          <a
+            href="#"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
             ¿Olvidaste tu contraseña?
           </a>
         </motion.div>
       </motion.div>
     </motion.div>
-  )
+  );
 }

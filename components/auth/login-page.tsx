@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AnimatedBackground } from "./animated-background";
 import { LoginForm } from "./login-form";
 import { AnimatedLogo } from "./animated-logo";
 import { FeedbackMessage } from "./feedback-message";
-import { ThemeToggle } from "./theme-toggle";
+import { AnimatedBackground } from "../animated-background";
+import { ThemeToggle } from "../theme-toggle";
 
 export default function LoginPage() {
   const [loginSuccess, setLoginSuccess] = useState(false);
