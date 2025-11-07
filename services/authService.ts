@@ -4,7 +4,7 @@ export const registerNewUser = async (body: {
   email: string;
   password: string;
 }) => {
-  const res = await fetch("https://api.example.com/register", {
+  const res = await fetch("", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
